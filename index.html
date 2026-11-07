@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        
+        <!-- Menu Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">✓</div>
+                <span>TaskFlow</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-filter="all">Quadro Kanban</a>
+                <a href="#" class="nav-item" data-filter="todo">A Fazer</a>
+                <a href="#" class="nav-item" data-filter="doing">Em Andamento</a>
+                <a href="#" class="nav-item" data-filter="done">Concluídas</a>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            
+            <!-- Cabeçalho -->
+            <header class="header">
+                <div>
+                    <h1>Visão Geral do Projeto</h1>
+                    <p class="subtitle">Gerencie suas atividades diárias com eficiência e simplicidade.</p>
+                </div>
+                <button id="btn-open-modal" class="btn-primary">+ Nova Tarefa</button>
+            </header>
+
+            <!-- Dashboard de Estatísticas -->
+            <section class="dashboard">
+                <div class="card-stat">
+                    <span class="stat-label">Total de Tarefas</span>
+                    <span id="stat-total" class="stat-value">0</span>
+                </div>
+                <div class="card-stat">
+                    <span class="stat-label">A Fazer</span>
+                    <span id="stat-todo" class="stat-value text-todo">0</span>
+                </div>
+                <div class="card-stat">
+                    <span class="stat-label">Em Andamento</span>
+                    <span id="stat-doing" class="stat-value text-doing">0</span>
+                </div>
+                <div class="card-stat">
+                    <span class="stat-label">Concluídas</span>
+                    <span id="stat-done" class="stat-value text-done">0</span>
+                </div>
+            </section>
+
+            <!-- Pesquisa e Filtros -->
+            <section class="filters-bar">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Pesquisar tarefa pelo título...">
+                </div>
+                <div class="filter-group">
+                    <select id="filter-priority">
+                        <option value="">Todas as Prioridades</option>
+                        <option value="baixa">Baixa</option>
+                        <option value="media">Média</option>
+                        <option value="alta">Alta</option>
+                    </select>
+
+                    <select id="filter-status">
+                        <option value="">Todos os Status</option>
+                        <option value="todo">A Fazer</option>
+                        <option value="doing">Em Andamento</option>
+                        <option value="done">Concluída</option>
+                    </select>
+
+                    <button id="btn-clear-filters" class="btn-secondary">Limpar</button>
+                </div>
+            </section>
+
+            <!-- Quadro Kanban com Três Colunas -->
+            <div class="kanban-board">
+                <!-- Coluna 1: A Fazer -->
+                <div class="kanban-column" id="col-todo-wrap">
+                    <div class="column-header">
+                        <h2>A Fazer</h2>
+                        <span id="count-todo" class="column-badge">0</span>
+                    </div>
+                    <div class="task-list" id="list-todo"></div>
+                </div>
+
+                <!-- Coluna 2: Em Andamento -->
+                <div class="kanban-column" id="col-doing-wrap">
+                    <div class="column-header">
+                        <h2>Em Andamento</h2>
+                        <span id="count-doing" class="column-badge">0</span>
+                    </div>
+                    <div class="task-list" id="list-doing"></div>
+                </div>
+
+                <!-- Coluna 3: Concluídas -->
+                <div class="kanban-column" id="col-done-wrap">
+                    <div class="column-header">
+                        <h2>Concluídas</h2>
+                        <span id="count-done" class="column-badge">0</span>
+                    </div>
+                    <div class="task-list" id="list-done"></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal de Cadastro / Edição -->
+    <div id="modal-task" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Cadastrar Nova Tarefa</h2>
+                <button id="btn-close-modal" class="btn-close">&times;</button>
+            </div>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                
+                <div class="form-group">
+                    <label for="task-title">Título da Tarefa *</label>
+                    <input type="text" id="task-title" required placeholder="Ex: Desenvolver script em JS">
+                </div>
+
+                <div class="form-group">
+                    <label for="task-desc">Descrição</label>
+                    <textarea id="task-desc" rows="3" placeholder="Detalhes ou observações..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-priority">Prioridade</label>
+                        <select id="task-priority">
+                            <option value="baixa">Baixa</option>
+                            <option value="media" selected>Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="task-date">Prazo de Vencimento</label>
+                        <input type="date" id="task-date">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancel" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar Tarefa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
